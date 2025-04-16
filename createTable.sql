@@ -65,3 +65,7 @@ CREATE TYPE orderItemType AS TABLE (
     ProductID INT,
     Quantity INT
 );
+
+--alter table to include categorization 
+ALTER TABLE Customers
+ADD Tier VARCHAR(10);
