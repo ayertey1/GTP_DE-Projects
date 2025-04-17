@@ -96,6 +96,7 @@ SELECT
     Tier
 FROM Customers;
 ```
+---
 
 ### 5. **Automation Strategy**
 - SQL Server Express doesn't support Agent Jobs  
@@ -143,14 +144,4 @@ Includes:
 
 ---
 
-## Author
-
-**Peter Caleb Ayertey**  
-_Data Engineer with experience in SQL Server, automation, and data pipelines_
-
----
-
-## License
-
-This project is for educational use and demo purposes. No commercial license is provided.
 
