@@ -1,3 +1,5 @@
+-- PHASE ONE : DATABASE DESIGN AND SCHEMA IMPLEMENTATION
+
 -- create Database for the inventory
 IF NOT EXISTS(
     select name 
