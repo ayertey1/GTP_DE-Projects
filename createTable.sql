@@ -23,6 +23,10 @@ CREATE TABLE Products(
     StockQuantity INT NOT NULL,
     ReorderLevel INT NOT NULL
 );
+-- Index on ProductName for quick searches
+CREATE INDEX idx_Products_ProductName ON Products(ProductName);
+-- Index on StockQuantity to optimize low stock queries
+CREATE INDEX idx_Products_StockQuantity ON Products(StockQuantity);
 
 --customers table
 CREATE TABLE Customers(
@@ -31,6 +35,8 @@ CREATE TABLE Customers(
     Email NVARCHAR(100) UNIQUE NOT NULL,
     PhoneNumber NVARCHAR(20)
 );
+-- Index on CustomerName for faster lookup/reporting
+CREATE INDEX idx_Customers_CustomerName ON Customers(CustomerName);
 
 --orders tables 
 CREATE TABLE Orders(
@@ -40,6 +46,8 @@ CREATE TABLE Orders(
     TotalAmount DECIMAL(10,2),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
+-- Index on CustomerID and OrderDate for reporting
+CREATE INDEX idx_Orders_CustomerID_OrderDate ON Orders(CustomerID, OrderDate);
 
 --orderDetails Table 
 CREATE TABLE OrderDetails(
@@ -51,6 +59,10 @@ CREATE TABLE OrderDetails(
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
+-- Index on OrderID for fast joins
+CREATE INDEX idx_OrderDetails_OrderID ON OrderDetails(OrderID);
+-- Index on ProductID to optimize product-specific aggregations
+CREATE INDEX idx_OrderDetails_ProductID ON OrderDetails(ProductID);
 
 --create Inventorylogs table
 CREATE TABLE Inventorylogs (
@@ -61,6 +73,8 @@ CREATE TABLE Inventorylogs (
     ChangeDate DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
+-- Index on ProductID and ChangeDate for auditing
+CREATE INDEX idx_InventoryLogs_ProductID_ChangeDate ON InventoryLogs(ProductID, ChangeDate);
 
 --Create a table type to pass order items 
 CREATE TYPE orderItemType AS TABLE (
@@ -71,3 +85,4 @@ CREATE TYPE orderItemType AS TABLE (
 --alter table to include categorization 
 ALTER TABLE Customers
 ADD Tier VARCHAR(10);
+
