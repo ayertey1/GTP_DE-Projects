@@ -3,6 +3,7 @@ SELECT
     o.OrderID,
     c.CustomerName,
     o.OrderDate,
+    c.Tier,
     o.TotalAmount,
     COUNT(od.ProductID) AS TotalItems
 FROM 
@@ -12,4 +13,5 @@ JOIN
 JOIN 
     OrderDetails od ON o.OrderID = od.OrderID
 GROUP BY 
-    o.OrderID, c.CustomerName, o.OrderDate, o.TotalAmount;
+    o.OrderID, c.CustomerName, o.OrderDate, o.TotalAmount, c.Tier;
+
