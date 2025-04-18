@@ -3,7 +3,6 @@
 This repository contains the projects and tasks completed as part of the Data Engineering Graduate Trainee Program at Amalitech. Each project assigned to me during the program will be stored in individual branches within this main repository, allowing for easy version control, tracking, and possible collaboration.
 
 ---
-
 ## Goals
 
 - To gain hands-on experience with various data engineering concepts, tools, and technologies, including data pipelines, ETL processes, database management, and cloud computing.
@@ -11,16 +10,6 @@ This repository contains the projects and tasks completed as part of the Data En
 - To document key learnings, challenges, and solutions encountered throughout the program.
 
 ---
-
-## Tools & Technologies
-
-- **Programming Languages**: Python, SQL
-- **Data Tools**: Apache Airflow, Apache Spark, DBT, Pandas
-- **Databases**: PostgreSQL, MMSQL, and cloud databases
-- **Cloud Platforms**: AWS
-
----
-
 ## Branching Structure
 
 This repository follows a clean and organized branching model:
@@ -55,6 +44,14 @@ This approach ensures:
 - Clean separation of concerns between development and production-ready code.
 - Easy rollback and change tracking.
 - Consistent documentation and handoff between phases.
+---
+
+## Tools & Technologies
+
+- **Programming Languages**: Python, SQL
+- **Data Tools**: Apache Airflow, Apache Spark, DBT, Pandas
+- **Databases**: PostgreSQL, MMSQL, and cloud databases
+- **Cloud Platforms**: AWS
 
 ---
 
