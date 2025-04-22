@@ -39,8 +39,7 @@ This project automates the process of:
 ```bash
 tmdb_movie_analysis/
 │
-├── README.md                # Project documentation
-├── .env                     # Environment variables (API keys)
+├── README.md                # Project documentation Lab1
 ├── .gitignore               # ignore files(.env)
 │
 ├── data/                    # Data storage
@@ -54,10 +53,6 @@ tmdb_movie_analysis/
 │   ├── data_analysis.py     # KPI calculation and analysis
 |   ├── requirements.txt     # Python dependencies
 │   └── visualization.py     # Data visualization functions
-│               
-│
-├── report/                  
-|    └── Lab1Readme.md      # Readme and report on Lab1
 │               
 │
 ├── notebooks/                  
