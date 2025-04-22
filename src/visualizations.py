@@ -17,14 +17,8 @@ def plot_revenue_vs_budget(df):
 def plot_roi_distribution_by_genre(df):
     """Plot ROI Distribution by Genre."""
     df_exploded = df.dropna(subset=['genres']).copy()
-
-    # FORCE genres to string before splitting
-    df_exploded['genres'] = df_exploded['genres'].astype(str).str.split('|')
+    df_exploded['genres'] = df_exploded['genres'].str.split('|')
     df_exploded = df_exploded.explode('genres')
-
-    # Drop fake 'nan' genres after exploding
-    df_exploded = df_exploded[df_exploded['genres'].notna()]
-    df_exploded = df_exploded[df_exploded['genres'] != 'nan']
 
     plt.figure(figsize=(14,8))
     sns.boxplot(data=df_exploded, x='genres', y='roi')
@@ -33,8 +27,6 @@ def plot_roi_distribution_by_genre(df):
     plt.ylabel('Return on Investment (ROI)')
     plt.grid(True, ls="--", linewidth=0.5)
     plt.show()
-
-
 
 def plot_popularity_vs_rating(df):
     """Plot Popularity vs Rating."""

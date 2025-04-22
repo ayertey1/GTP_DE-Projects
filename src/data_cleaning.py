@@ -32,14 +32,27 @@ def clean_movie_data(df, verbose=False):
             return {}
 
     # --- Helper function for list-based fields ---
+    # def parse_json_list(x, key='name', separator='|'):
+    #     try:
+    #         items = ast.literal_eval(x)
+    #         if isinstance(items, list):
+    #             return separator.join(item.get(key, '') for item in items if item.get(key))
+    #     except Exception:
+    #         return np.nan
+    #     return np.nan
     def parse_json_list(x, key='name', separator='|'):
-        try:
-            items = ast.literal_eval(x)
-            if isinstance(items, list):
-                return separator.join(item.get(key, '') for item in items if item.get(key))
-        except Exception:
-            return np.nan
+        if isinstance(x, list):
+            return separator.join(item.get(key, '') for item in x if item.get(key))
+
+        if isinstance(x, str):
+            try:
+                parsed = ast.literal_eval(x)
+                if isinstance(parsed, list):
+                    return separator.join(item.get(key, '') for item in parsed if item.get(key))
+            except Exception:
+                return np.nan
         return np.nan
+
 
     # --- Drop irrelevant columns ---
     columns_to_drop = ['adult', 'imdb_id', 'original_title', 'video', 'homepage']
@@ -79,7 +92,7 @@ def clean_movie_data(df, verbose=False):
     df['crew_size'] = df['credits_parsed'].apply(get_crew_size)
     df.drop(columns=['credits_parsed'], inplace=True)
 
-    # --- Clean up multiple-value fields by sorting alphabetically ---
+    #--- Clean up multiple-value fields by sorting alphabetically ---
     def sort_multi_values(x):
         if isinstance(x, str) and x.strip() != '':
             return '|'.join(sorted(x.split('|')))
@@ -87,6 +100,8 @@ def clean_movie_data(df, verbose=False):
 
     for col in ['genres', 'production_countries', 'spoken_languages']:
         df[col] = df[col].apply(sort_multi_values)
+
+
 
     # --- Optional: Print value counts ---
     if verbose:
