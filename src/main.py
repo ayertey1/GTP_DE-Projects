@@ -18,7 +18,7 @@ def main():
     df_cleaned = clean_movie_data(df)
     
     # Step 3: Analyze
-    df = add_helper_columns(df_cleaned)
+    df_cleaned = add_helper_columns(df_cleaned)
 
     print("\n Highest Revenue Movies:")
     print(top_revenue_movies(df_cleaned))
