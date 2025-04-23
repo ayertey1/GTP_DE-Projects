@@ -37,13 +37,13 @@ def fetch_movie_data_spark(movie_ids, save_path="data/raw"):
         time.sleep(0.3)  # ~3 req/sec max
 
     # Convert to RDD and DataFrame
-    rdd = spark.sparkContext.parallelize(movies_data)
+    rdd = spark.sparkContext.parallelize([json.dumps(movie) for movie in movies_data])
     df = spark.read.json(rdd)
 
     # Save using timestamp
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     full_path = f"{save_path}/moviesData_{timestamp}.parquet"
-    df.write.mode("overwrite").parquet(full_path)
+    df.coalesce(1).write.mode("overwrite").parquet(full_path)
 
     print(f"Data saved to {full_path}")
     return df
