@@ -10,7 +10,7 @@ def fetch_movie_data_spark(movie_ids, save_path="data/raw"):
     # Load env variables
     load_dotenv()
     api_key = os.getenv('API_KEY')
-    base_url = os.getenv('BASE_url')  # should end with '/movie/'
+    base_url = os.getenv('BASE_url')  
 
     # Initialize Spark
     spark = SparkSession.builder.appName("FetchTMDBMovies").getOrCreate()
@@ -40,10 +40,10 @@ def fetch_movie_data_spark(movie_ids, save_path="data/raw"):
     rdd = spark.sparkContext.parallelize([json.dumps(movie) for movie in movies_data])
     df = spark.read.json(rdd)
 
-    # Save using timestamp
-    timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    full_path = f"{save_path}/moviesData_{timestamp}.parquet"
-    df.coalesce(1).write.mode("overwrite").parquet(full_path)
+    # # Save using timestamp
+    # timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    # full_path = f"{save_path}/moviesData_{timestamp}.parquet"
+    # df.coalesce(1).write.mode("overwrite").parquet(full_path)
 
-    print(f"Data saved to {full_path}")
+    # print(f"Data saved to {full_path}")
     return df

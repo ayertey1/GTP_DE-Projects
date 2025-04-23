@@ -1,6 +1,10 @@
+from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     col, when, expr, mean, sum as _sum, count
 )
+
+# Spark session
+spark = SparkSession.builder.appName("TMDBanalysis").getOrCreate()
 
 # Add Helper KPI Columns (Profit & ROI) --
 def add_helper_columns(df):
