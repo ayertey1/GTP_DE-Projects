@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 from dataExtraction import fetch_movie_data_spark
 from dataRefinery import dataRefine
 from dataAnalysis import *
+from visualizations import visualize_movies
 from dotenv import load_dotenv
 
 # Spark session
@@ -82,6 +83,10 @@ def main():
     print(most_successful_franchises(df))
     print("\n most_successful_directors:")
     print(most_successful_directors(df))
+
+
+    #---- Visualizations ----
+    visualize_movies(df)
 
 
 
