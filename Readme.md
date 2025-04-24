@@ -36,21 +36,20 @@ This PySpark version automates:
 ```bash
 tmdb_movie_analysis_spark/
 │
-├── README.md                  # Project documentation
-├── .gitignore                 # Ignore sensitive/environment files
+├── README.md                       # Project documentation
+├── .gitignore                      # Ignore sensitive/environment files and data folder
+├── main.ipynb                      # Main runner script for notebook version of the pipeline
+├── utilityFunc.py                  # Holds the combined versions of dataExtraction.py, dataAnalysis.py, dataRefinery.py and visualizations.py
+├── requirements.txt                # Holds necessay dependencies used in this project
 │
-├── data/
-│   └── raw/                   # Raw TMDB data saved in Parquet format
 │
 ├── src/
-│   ├── main.py                 # Main runner script
-│   ├── extraction.py           # Extract movie data using API with fallback/retry
-│   ├── transformation_movie.py # Clean and transform nested movie data
-│   ├── analysis.py             # Perform KPI and director/franchise success ranking
-│   └── visualization.py        # Visualize final results using Pandas
-│
-├── notebooks/
-│   └── wrangler.ipynb         # Interactive notebook version of the pipeline
+│   ├── main.py                     # Main runner script
+│   ├── dataExtraction.py           # Extract movie data using API with fallback/retry
+│   ├── dataRefinery.py             # Clean and transform nested movie data
+│   ├── dataAnalysis.py             # Perform KPI and director/franchise success ranking
+│   └── visualizations.py           # Visualize final results using Pandas
+
 ```
 ---
 
