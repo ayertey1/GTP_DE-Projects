@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     network:
-      - sparknet 
+      sparknet:
 
 
   spark:
@@ -25,7 +25,7 @@ services:
       - "7077:7077"
       - "8080:8080"
     network:
-      - sparknet
+      sparknet:
     depends_on:
       - postgres
 
@@ -34,3 +34,4 @@ volumes:
 
 networks:
   sparknet:
+    driver: bridge
