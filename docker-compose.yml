@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgre_db
+    environment:
+      POSTGRES_USER: sparkuser
+      POSTGRES_PASSWORD: sparkpass
+      POSTGRES_DB: ssparkdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    network:
+      - sparknet 
+
+
+  spark:
+    image: bitnami/spark:latest
+    container_name: spark_master
+    environment:
+      - SPARK_MODE= master
+    port:
+      - "7077:7077"
+      - "8080:8080"
+    network:
+      - sparknet
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  sparknet:
