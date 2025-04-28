@@ -12,8 +12,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    network:
-      sparknet:
+    networks:
+      - sparknet
 
 
   spark:
@@ -21,11 +21,11 @@ services:
     container_name: spark_master
     environment:
       - SPARK_MODE= master
-    port:
+    ports:
       - "7077:7077"
       - "8080:8080"
-    network:
-      sparknet:
+    networks:
+      - sparknet
     depends_on:
       - postgres
 
