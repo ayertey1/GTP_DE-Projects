@@ -20,7 +20,7 @@ services:
     image: bitnami/spark:latest
     container_name: spark_master
     environment:
-      - SPARK_MODE= master
+      - SPARK_MODE=master
     ports:
       - "7077:7077"
       - "8080:8080"
@@ -28,6 +28,8 @@ services:
       - sparknet
     depends_on:
       - postgres
+    volumes:
+      - ./data:/opt/data 
 
 volumes:
   postgres_data:
