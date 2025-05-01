@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StringType, IntegerType, TimestampType
 from pyspark.sql.functions import col
@@ -34,11 +36,21 @@ transformed_df = df.select(
     "event_time"
 )
 
-# PostgreSQL connection config
-pg_url = "jdbc:postgresql://postgres_db:5432/ssparkdb"  # service name from docker-compose
+# # PostgreSQL connection config
+# pg_url = "jdbc:postgresql://postgres_db:5432/ssparkdb"  # service name from docker-compose
+# pg_properties = {
+#     "user": "sparkuser",
+#     "password": "sparkpass",
+#     "driver": "org.postgresql.Driver"
+# }
+# Load environment variables from .env
+load_dotenv()
+
+# PostgreSQL connection config from .env
+pg_url = os.getenv("POSTGRES_URL")
 pg_properties = {
-    "user": "sparkuser",
-    "password": "sparkpass",
+    "user": os.getenv("POSTGRES_USER"),
+    "password": os.getenv("POSTGRES_PASSWORD"),
     "driver": "org.postgresql.Driver"
 }
 
