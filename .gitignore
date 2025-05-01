@@ -1,3 +1,4 @@
 .spark-streaming
 jars/
 data/
+.env
