@@ -1,0 +1,5 @@
+host=postgres_db
+port=5432
+database=ssparkdb
+user=sparkuser
+password=sparkpass
