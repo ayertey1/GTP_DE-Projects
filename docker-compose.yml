@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   postgres:
@@ -17,7 +17,9 @@ services:
 
 
   spark:
-    image: bitnami/spark:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
     container_name: spark_master
     environment:
       - SPARK_MODE=master
@@ -30,6 +32,8 @@ services:
       - postgres
     volumes:
       - ./data:/opt/data 
+      - ./spark_streaming_to_postgres.py:/opt/spark_streaming_to_postgres.py 
+      - .env:/opt/.env
 
 volumes:
   postgres_data:
