@@ -2,3 +2,4 @@
 jars/
 data/
 .env
+Dockerfile.spark
