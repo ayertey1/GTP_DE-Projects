@@ -1,0 +1,5 @@
+.spark-streaming
+jars/
+data/
+.env
+Dockerfile.spark
