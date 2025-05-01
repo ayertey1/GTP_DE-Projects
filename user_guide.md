@@ -49,6 +49,7 @@ Invoke-WebRequest https://jdbc.postgresql.org/download/postgresql-42.7.3.jar -Ou
 
 ### 4. Start the Docker Containers
 ```bash
+docker-compose build
 docker-compose up -d
 ```
 This launches:
@@ -57,18 +58,13 @@ This launches:
 
 - spark_master with Spark Structured Streaming
 
-### 5. Copy Files into the Spark Container
-```bash
-docker cp .\spark_streaming_to_postgres.py spark_master:/opt/spark_streaming_to_postgres.py
-docker cp .\jars\postgresql-42.7.3.jar spark_master:/opt/postgresql-42.7.3.jar
-```
 #### **NB: In two separate terminals perform 6 and 7**
 ---
-### 6. Run the Data Generator
+### 5. Run the Data Generator
 ```bash
 python data_generator.py
 ```
-### 7. Run the Spark Streaming Job
+### 6. Run the Spark Streaming Job
 ```bash
 docker exec -it spark_master spark-submit \
   --jars /opt/postgresql-42.7.3.jar \
@@ -76,7 +72,7 @@ docker exec -it spark_master spark-submit \
 ```
 Spark will continuously watch `/opt/data/input/` (mapped from ./data/input/) and write cleaned data into PostgreSQL.
 
-### 8. Verify the Data in PostgreSQL
+### 7. Verify the Data in PostgreSQL
 ```bash
 docker exec -it postgres_db psql -U sparkuser -d ssparkdb
 ```
@@ -85,7 +81,7 @@ Run:
 SELECT * FROM user_events LIMIT 10;
 ```
 
-### 9. Stop the Pipeline
+### 8. Stop the Pipeline
 * Press Ctrl+C to stop the Spark job or data generator
 
 * Stop containers:
