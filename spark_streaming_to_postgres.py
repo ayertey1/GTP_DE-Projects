@@ -36,13 +36,6 @@ transformed_df = df.select(
     "event_time"
 )
 
-# # PostgreSQL connection config
-# pg_url = "jdbc:postgresql://postgres_db:5432/ssparkdb"  # service name from docker-compose
-# pg_properties = {
-#     "user": "sparkuser",
-#     "password": "sparkpass",
-#     "driver": "org.postgresql.Driver"
-# }
 # Load environment variables from .env
 load_dotenv()
 
