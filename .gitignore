@@ -1,2 +1,5 @@
 .env
 .real-time
+consumer_logs.txt
+full_logs.txt
+producer_logs.txt
