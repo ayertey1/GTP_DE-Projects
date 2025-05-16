@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Airflow metadata DB (Postgres for Airflow itself)
   airflow-db:
     image: postgres:13
     environment:
@@ -13,7 +12,6 @@ services:
     networks:
       - airflow_net
 
-  # Airflow webserver
   webserver:
     image: apache/airflow:2.8.1
     restart: always
@@ -21,7 +19,8 @@ services:
       - airflow-db
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN}
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY}
       AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
       - ./dags:/opt/airflow/dags
@@ -32,8 +31,9 @@ services:
     command: webserver
     networks:
       - airflow_net
+    env_file:
+      - .env
 
-  # Airflow scheduler
   scheduler:
     image: apache/airflow:2.8.1
     restart: always
@@ -41,7 +41,8 @@ services:
       - webserver
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN}
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY}
       AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
       - ./dags:/opt/airflow/dags
@@ -50,8 +51,29 @@ services:
     command: scheduler
     networks:
       - airflow_net
+    env_file:
+      - .env
 
-  # MySQL (Staging DB)
+  airflow-init:
+    image: apache/airflow:2.8.1
+    depends_on:
+      - airflow-db
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN}
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY}
+      AIRFLOW_UID: ${AIRFLOW_UID}
+    entrypoint: /bin/bash
+    command: -c "airflow db migrate"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./data:/opt/airflow/data
+    networks:
+      - airflow_net
+    env_file:
+      - .env
+
   mysql:
     image: mysql:8
     restart: always
@@ -66,8 +88,9 @@ services:
       - "3306:3306"
     networks:
       - airflow_net
+    env_file:
+      - .env
 
-  # PostgreSQL (Analytics DB)
   postgres:
     image: postgres:13
     restart: always
@@ -81,11 +104,13 @@ services:
       - "5432:5432"
     networks:
       - airflow_net
+    env_file:
+      - .env
+
+volumes:
+  airflow_db:
+  mysql_data:
+  postgres_data:
 
 networks:
   airflow_net:
-
-volumes:
-  mysql_data:
-  postgres_data:
-  airflow_db:
