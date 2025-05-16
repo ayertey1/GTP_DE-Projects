@@ -22,18 +22,11 @@ default_args = {
     'depends_on_past': False,
 }
 
-# with DAG(
-#     dag_id='flight_price_pipeline',
-#     default_args=default_args,
-#     schedule_interval=None,  # Manual trigger
-#     catchup=False,
-#     description='Flight Price Analysis Pipeline for Bangladesh'
-# ) as dag:
-
 with DAG(
     dag_id='flight_price_pipeline_Peter_Caleb_Ayertey',
     default_args=default_args,
-    schedule_interval='*/2 * * * *',  # Every 2 minutes CRON expression
+    # schedule_interval='*/2 * * * *',  # Every 2 minutes CRON expression for testing
+    schedule_interval='0 */3 * * *', # At minute 0, every 3rd hour 
     catchup=False,
     description='Flight Price Analysis Pipeline for Bangladesh'
 ) as dag:
