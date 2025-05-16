@@ -16,7 +16,7 @@ from load_to_postgres import load_to_postgres
 
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime.now(),  # Start now
+    'start_date': datetime(2025, 5, 16) - timedelta(minutes=5), 
     'retries': 2,
     'retry_delay': timedelta(minutes=1),  # Optional: wait 1 min before retry
     'depends_on_past': False,
