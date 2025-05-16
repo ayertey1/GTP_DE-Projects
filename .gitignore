@@ -1,2 +1,7 @@
 .airflow
 .env
+dags/__pycache__
+data/
+scripts/__init__.py
+scripts/utils/__init__.py
+**/__pycache__/
