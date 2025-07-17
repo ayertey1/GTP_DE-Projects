@@ -69,4 +69,5 @@ Upcoming labs will cover advanced data engineering concepts such as:
 - Data modeling with DBT
 - Cloud pipeline deployment on AWS
 
-Stay tuned for updates in each respective `prod_labX` branch!
+## Stay tuned for updates in each respective `prod_labX` branch!
+
