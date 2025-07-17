@@ -1,147 +1,73 @@
-# Inventory and Order Management System
+# GTP_DE-Projects
 
-## Project Overview
+This repository contains the projects and tasks completed as part of the Data Engineering Graduate Trainee Program at Amalitech. Each project assigned to me during the program will be stored in individual branches within this main repository, allowing for easy version control, tracking, and possible collaboration.
 
-This project implements a full-featured **Inventory and Order Management System** designed for an e-commerce business. The system tracks products, customers, orders, and inventory changes, and supports critical business operations like order placement, automated stock replenishment, customer analysis, and reporting.
-
+---
 ## Goals
 
-- Track product inventory, customer data, and order processing efficiently.
-- Automatically update stock levels and log inventory changes.
-- Provide business insights via reports and customer purchase analysis.
-- Automate key processes to reduce manual effort and errors.
-- Prepare a system ready for scaling and integration into web applications.
+- To gain hands-on experience with various data engineering concepts, tools, and technologies, including data pipelines, ETL processes, database management, and cloud computing.
+- To demonstrate proficiency in building scalable, reliable, and efficient data infrastructure.
+- To document key learnings, challenges, and solutions encountered throughout the program.
 
 ---
+## Branching Structure
 
-## File Structure
+This repository follows a clean and organized branching model:
 
-```bash
-LAB 2/
-│
-├── README.md                    # Project documentation              
-│
-├── storedProcedures/            # This directory for stored procedures and procedure call
-│   ├── placeOrder.sql           # places order and does computations on total amount
-│   ├── procedureCalls.sql       # calls the procedures to be used
-│   ├── ReplenishLowStock.sql    # to refill shorts stocks
-│   └── UpdateCustomerTiers.sql  # updates the tiers of customers gold/silver/bronze
-│               
-│
-├── views/
-|    ├── vw_LowStockProducts.sql    # view for showing stock shorts               
-|    └── vw_OrderSummary.sql        # view summarizing Order and customer and their tiers
-│               
-│
-├── createTable.sql   # Database and Tables Creation Script
-|
-│               
-│
-├── dataInsertion.sql  # Script for Inserting data
+```
+main
+├── README.md (project overview)
+├── prod_lab1
+│   └── project files for lab 1 (merged from dev_lab1)
+├── prod_lab2
+│   └── project files for lab 2 (merged from dev_lab2)
+├── prod_labN
+│   └── project files for lab N (merged from dev_labN)
 ```
 
----
-
-## Key Features & Deliverables
-
-### 1. **Database Schema**
-- Customers, Products, Orders, OrderDetails, InventoryLogs
-- Referential integrity using foreign keys
-- Reorder logic using `ReorderLevel`
-
-### 2. **Stored Procedures**
-- `PlaceOrder`:  
-  ‣ Accepts multiple products in a single order  
-  ‣ Updates stock quantities  
-  ‣ Calculates total and applies bulk discount  
-  ‣ Logs inventory changes  
-- `ReplenishLowStock`:  
-  ‣ Replenishes all products below reorder threshold  
-  ‣ Logs replenishments in the inventory log
-- `UpdateCustomerTiers`:  
-  ‣ Updates the customers tiers based on spending
-- `procedureCalls`:  
-  ‣ calling the procedures for possible testcase
-
-
-### 3. **Views**
-- `vw_OrderSummary`: Full customer & order item breakdown
-- `vw_LowStockProducts`: Real-time list of items needing restocking
-
-### 4. **Reporting Queries**
-- Order totals by customer
-```
-SELECT 
-    c.Name,
-    COUNT(o.OrderID) AS TotalOrders,
-    SUM(o.TotalAmount) AS TotalSpent
-FROM Customers c
-JOIN Orders o ON c.CustomerID = o.CustomerID
-GROUP BY c.Name;
-```
-- Product performance (units sold, revenue)
-```
-SELECT 
-    p.ProductName,
-    SUM(od.Quantity) AS UnitsSold,
-    SUM(od.Quantity * od.PriceAtOrder) AS Revenue
-FROM OrderDetails od
-JOIN Products p ON od.ProductID = p.ProductID
-GROUP BY p.ProductName;
-```
-- Customer tier classification (Gold/Silver/Bronze)
-```
-SELECT
-    CustomerName,
-    Tier
-FROM Customers;
-```
----
-
-### 5. **Automation Strategy**
-- SQL Server Express doesn't support Agent Jobs  
-- Stored Procedures were created for Replenish, Customer tier and Placing Orders
+- **main**: Default branch with a clean overview. No development or project files live here.
+- **prod_labX**: Production-ready branch for each lab project.
+- **dev_labX**: Temporary development branch used while building each lab project.
+  - Merged into its corresponding `prod_labX` branch upon completion.
+  - Deleted after merge to maintain a clean history.
 
 ---
 
-## Testing
+## Workflow
 
-Includes:
-- Dummy data for customers, products, and orders (20–50 rows each)
-- Manual test cases for:
-  - Order placement
-  - Stock depletion
-  - Auto-replenishment
-  - Inventory logging
-  - Customer tier changes
+1. A new project is initiated in a `dev_labX` branch.
+2. All development work (scripts, notebooks, documentation, etc.) occurs in this branch.
+3. Upon final review and completion, the branch is merged into its corresponding `prod_labX` branch.
+4. The `dev_labX` branch is deleted after successful merge.
+
+This approach ensures:
+- Clean separation of concerns between development and production-ready code.
+- Easy rollback and change tracking.
+- Consistent documentation and handoff between phases.
+---
+
+## Tools & Technologies
+
+- **Programming Languages**: Python, SQL
+- **Data Tools**: Apache Airflow, Apache Spark, DBT, Pandas
+- **Databases**: PostgreSQL, MMSQL, and cloud databases
+- **Cloud Platforms**: AWS
 
 ---
 
-## Learning Outcomes
+## Contribution Guidelines
 
-✔ Designing normalized databases  
-✔ Using stored procedures for logic control    
-✔ Applying business logic inside SQL  
-✔ Building scalable reporting layers via views
+Although this repository is primarily for individual learning, best practices such as meaningful commits, proper branch naming, and thorough documentation are followed to simulate real-world collaboration workflows.
 
 ---
 
-## Setup Instructions
+## Next Steps
 
-1. Clone or download the repository.
-2. Run `createTable.sql` to set up the database schema.
-3. Run `dataInsertion.sql` to populate dummy data.
-4. Run `placeOrder.sql`, `ReplenishLowStock.sql`, and `UpdateCustomerTiers.sql`.
-5. Run `procedureCalls.sql` the products and stocks values can be changed in there as desire.
-5. Use queries provided in the readme.md to validate system behavior.
+Upcoming labs will cover advanced data engineering concepts such as:
+- Data orchestration with Airflow
+- Stream processing with Kafka/Spark
+- Data modeling with DBT
+- Cloud pipeline deployment on AWS
 
----
-
-## Requirements
-
-- SQL Server (Express or Full Edition)
-- SQL Server Management Studio (SSMS) or compatible tool
-
----
-
+## Stay tuned for updates in each respective `prod_labX` branch!
 
